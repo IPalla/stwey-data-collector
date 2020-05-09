@@ -1,0 +1,25 @@
+{
+  "name": "stwey-data-collector",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IPalla/stwey-data-collector.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IPalla/stwey-data-collector/issues"
+  },
+  "homepage": "https://github.com/IPalla/stwey-data-collector#readme",
+  "dependencies": {
+    "amqplib": "^0.5.5",
+    "dotenv": "^8.2.0",
+    "elasticsearch": "^16.7.1",
+    "express": "^4.17.1"
+  }
+}

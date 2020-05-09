@@ -1,0 +1,47 @@
+version: '3.1'
+
+services:
+  elasticsearch:
+    container_name: elasticsearch
+    image: elasticsearch:7.4.0
+    environment:
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - 9200:9200
+      - 9300:9300
+  kibana:
+    container_name: kibana
+    image: kibana:7.4.0
+    ports:
+      - 5601:5601  
+  rabbit-manager:
+    container_name: rabbit-manager
+    image: rabbitmq:3.8.0-management
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:15672"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+  # event-receiver:
+  #   depends_on:
+  #     - rabbit-manager
+  #   command: 'curl loca:15672'
+  #   build: .
+  #   environment: 
+  #     - ES_HOST=http://elastic:changeme@elasticsearch:9200
+  #     - RABBIT_HOST=rabbit-manager
+  #     - RABBIT_USR=rabbitmq
+  #     - RABBIT_PWD=rabbitmq
+  #     - RABBIT_TWEETS_QUEUE_NAME=tweets-queue
+  #   ports:
+  #     - 3000:3000
