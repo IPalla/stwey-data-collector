@@ -15,15 +15,20 @@ const eventTypes = {
 };
 
 function addNewTweet(event){
+    console.log('add neww tweet');
     const { type, payload} = event;
     return client.index({
         index: 'processed-tweet',
         body: {
             "creationDate": new Date(),
-            "type": eventTypes[type],
-            payload
+            // "type": eventTypes[type],
+            payload: event
         }
     }, function(err, resp, status) {
+        console.log(err);
+        console.log(resp);
+        console.log(status);
+        console.log('error adding tweet');
         return status;
     });
 }

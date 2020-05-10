@@ -17,6 +17,7 @@ module.exports = amqp.connect(rabbitConfig, function(error0, connection) {
     channel.assertQueue(eventsQueue, {
       durable: true
     });
+    channel.bindQueue(eventsQueue, 'tweety-processor-output-exchange');
     channel.consume(eventsQueue, async (msg) => {
         console.debug("[x] Received %s", msg.content.toString());
         try {
